@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books List</title>
+</head>
+<body>
+    <h1>Books List</h1>
+    
+    <div id="booksList">
+        <!-- Books data will be inserted here -->
+    </div>
+
+    <script>
+        // Retrieve the data from local storage
+        const booksData = JSON.parse(localStorage.getItem('booksData'));
+
+        // Check if data exists in local storage
+        if (booksData) {
+            const booksListContainer = document.getElementById('booksList');
+            
+            // Create a table to display the data
+            const table = document.createElement('table');
+            table.border = '1';
+
+            // Create table header row
+            const headerRow = table.insertRow();
+            const headers = ['Book ID', 'Title', 'Author', 'Publication Year', 'Publisher ID'];
+            headers.forEach(headerText => {
+                const header = document.createElement('th');
+                header.textContent = headerText;
+                headerRow.appendChild(header);
+            });
+
+            // Create table rows for each book
+            booksData.forEach(book => {
+                const row = table.insertRow();
+                const rowData = [book.book_id, book.title, book.author, book.publication_year, book.publisher_id];
+                rowData.forEach(data => {
+                    const cell = row.insertCell();
+                    cell.textContent = data;
+                });
+            });
+
+            // Append the table to the container
+            booksListContainer.appendChild(table);
+        } else {
+            console.log('No data found in local storage.');
+        }
+    </script>
+</body>
+</html>
